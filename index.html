@@ -2,230 +2,169 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArchivePME - Solution d'Archivage Professionnelle</title>
-    <!-- Dans <head>, après le titre -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-
-<!-- Dans le formulaire, juste avant <div class="form-actions"> -->
-<div class="download-options">
-    <button type="button" class="btn btn-secondary btn-sm" onclick="generateJSON()" id="btnJson">💾 Télécharger JSON</button>
-    <button type="button" class="btn btn-secondary btn-sm" onclick="generatePDF()" id="btnPdf">📄 Générer PDF</button>
-</div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="ArchivePME - Solution d'archivage numérique pour PME">
+    <meta name="theme-color" content="#2563eb">
+    <title>ArchivePME - Archivage Professionnel</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="images/icon-192.png">
+    
+    <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Bibliothèques PDF/QR (chargement différé) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Navigation Mobile -->
     <nav class="navbar">
         <div class="container nav-container">
             <div class="logo">📁 ArchivePME</div>
-            <ul class="nav-links">
-                <li><a href="#accueil">Accueil</a></li>
-                <li><a href="#commande">Bon de Commande</a></li>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#accueil" class="nav-link">Accueil</a></li>
+                <li><a href="#commande" class="nav-link">Bon de Commande</a></li>
                 <li><a href="https://wa.me/22890588358" target="_blank" class="btn-nav">💬 WhatsApp</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section Transparente -->
+    <!-- Hero Section Mobile-Optimized -->
     <section id="accueil" class="hero">
         <div class="hero-content">
             <h1>Gérez tous vos documents en un seul endroit</h1>
             <p>ArchivePME permet aux PME de stocker, organiser et sécuriser factures, contrats et dossiers RH avec un accès instantané et chiffré.</p>
             
             <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">Entreprises</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">99.9%</span>
-                    <span class="stat-label">Disponibilité</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">24/7</span>
-                    <span class="stat-label">Support</span>
-                </div>
+                <div class="stat"><span class="stat-number">500+</span><span class="stat-label">Entreprises</span></div>
+                <div class="stat"><span class="stat-number">99.9%</span><span class="stat-label">Disponibilité</span></div>
+                <div class="stat"><span class="stat-number">24/7</span><span class="stat-label">Support</span></div>
             </div>
 
             <div class="cta-group">
                 <a href="#commande" class="btn btn-primary">📝 Remplir le bon de commande</a>
-                <a href="https://wa.me/22890588358?text=Bonjour%20je%20souhaite%20commander%20ArchivePME" class="btn btn-whatsapp" target="_blank">💬 Commander directement</a>
+                <a href="https://wa.me/22890588358?text=Bonjour%20je%20souhaite%20commander%20ArchivePME" class="btn btn-whatsapp" target="_blank">💬 Commander</a>
             </div>
         </div>
     </section>
 
-    <!-- Bon de Commande Pro -->
+    <!-- Bon de Commande Mobile-First -->
     <section id="commande" class="order-section">
         <div class="container">
             <div class="order-header">
                 <span class="badge">Formulaire Officiel</span>
                 <h2>Bon de Commande</h2>
-                <p>Remplissez ce formulaire pour formaliser votre demande. Notre équipe vous contactera sous 24h.</p>
+                <p>Remplissez ce formulaire pour formaliser votre demande.</p>
             </div>
 
-            <form id="orderForm" class="order-form">
+            <form id="orderForm" class="order-form" autocomplete="on">
                 <!-- Section 1: Entreprise -->
                 <div class="form-card">
-                    <div class="card-header">
-                        <span class="card-icon">🏢</span>
-                        <h3>Informations Entreprise</h3>
-                    </div>
+                    <div class="card-header"><span class="card-icon">🏢</span><h3>Informations Entreprise</h3></div>
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="company">Raison sociale <span class="required">*</span></label>
-                                <input type="text" id="company" required placeholder="Ex: Cabinet Comptable Lomé SARL">
-                                <span class="hint">Nom officiel de votre structure</span>
+                                <input type="text" id="company" name="company" required placeholder="Ex: Cabinet Comptable Lomé" inputmode="text">
                             </div>
                             <div class="form-group">
-                                <label for="sector">Secteur d'activité</label>
-                                <select id="sector">
+                                <label for="sector">Secteur</label>
+                                <select id="sector" name="sector">
                                     <option value="">Sélectionnez...</option>
-                                    <option value="Comptabilité">Cabinet comptable / Audit</option>
-                                    <option value="Santé">Clinique / Hôpital / Laboratoire</option>
-                                    <option value="Éducation">École / Université / Formation</option>
-                                    <option value="Commerce">PME / Commerce / Distribution</option>
-                                    <option value="Services">Prestation de services</option>
+                                    <option value="Comptabilité">Cabinet comptable</option>
+                                    <option value="Santé">Clinique / Hôpital</option>
+                                    <option value="Éducation">École / Université</option>
+                                    <option value="Commerce">PME / Commerce</option>
                                     <option value="ONG">ONG / Association</option>
-                                    <option value="Administration">Administration publique</option>
+                                    <option value="Administration">Administration</option>
                                     <option value="Autre">Autre</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="address">Adresse complète</label>
-                                <input type="text" id="address" placeholder="Ex: Boulevard du 13 Janvier, Lomé">
-                            </div>
-                            <div class="form-group">
-                                <label for="city">Ville</label>
-                                <input type="text" id="city" placeholder="Ex: Lomé">
-                            </div>
+                            <div class="form-group"><label for="address">Adresse</label><input type="text" id="address" name="address" placeholder="Ex: Boulevard du 13 Janvier"></div>
+                            <div class="form-group"><label for="city">Ville</label><input type="text" id="city" name="city" placeholder="Ex: Lomé"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Section 2: Contact -->
                 <div class="form-card">
-                    <div class="card-header">
-                        <span class="card-icon">👤</span>
-                        <h3>Responsable du Projet</h3>
-                    </div>
+                    <div class="card-header"><span class="card-icon">👤</span><h3>Responsable</h3></div>
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="name">Nom & Prénom <span class="required">*</span></label>
-                                <input type="text" id="name" required placeholder="Ex: AMOUSSOU Koffi Jean">
-                            </div>
-                            <div class="form-group">
-                                <label for="role">Fonction / Poste</label>
-                                <input type="text" id="role" placeholder="Ex: Directeur Général / DAF / IT Manager">
-                            </div>
+                            <div class="form-group"><label for="name">Nom & Prénom <span class="required">*</span></label><input type="text" id="name" name="name" required placeholder="Ex: AMOUSSOU Koffi"></div>
+                            <div class="form-group"><label for="role">Fonction</label><input type="text" id="role" name="role" placeholder="Ex: Directeur Général"></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="email">Email professionnel <span class="required">*</span></label>
-                                <input type="email" id="email" required placeholder="contact@entreprise.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Téléphone / WhatsApp <span class="required">*</span></label>
-                                <input type="tel" id="phone" required placeholder="+228 90 XX XX XX">
-                            </div>
+                            <div class="form-group"><label for="email">Email <span class="required">*</span></label><input type="email" id="email" name="email" required placeholder="contact@entreprise.com"></div>
+                            <div class="form-group"><label for="phone">Téléphone <span class="required">*</span></label><input type="tel" id="phone" name="phone" required placeholder="+228 90 XX XX XX" inputmode="tel"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Section 3: Configuration -->
                 <div class="form-card">
-                    <div class="card-header">
-                        <span class="card-icon">⚙️</span>
-                        <h3>Configuration & Exigences Techniques</h3>
-                    </div>
+                    <div class="card-header"><span class="card-icon">⚙️</span><h3>Configuration</h3></div>
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="plan">Formule souhaitée <span class="required">*</span></label>
-                                <select id="plan" required>
-                                    <option value="">Choisissez une offre...</option>
-                                    <option value="Starter">🟢 Starter - 15 000 FCFA/mois<br><small>Jusqu'à 5 utilisateurs, 5 Go stockage</small></option>
-                                    <option value="Business">🔵 Business - 35 000 FCFA/mois<br><small>Jusqu'à 20 utilisateurs, 50 Go stockage</small></option>
-                                    <option value="Enterprise">🟣 Enterprise - Sur devis<br><small>Utilisateurs illimités, installation personnalisée</small></option>
+                                <label for="plan">Formule <span class="required">*</span></label>
+                                <select id="plan" name="plan" required>
+                                    <option value="">Choisissez...</option>
+                                    <option value="Starter">🟢 Starter - 15 000 FCFA/mois</option>
+                                    <option value="Business">🔵 Business - 35 000 FCFA/mois</option>
+                                    <option value="Enterprise">🟣 Enterprise - Sur devis</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="users">Nombre d'utilisateurs estimé</label>
-                                <input type="number" id="users" min="1" max="500" placeholder="Ex: 15">
-                                <span class="hint">Nombre de personnes qui utiliseront l'application</span>
-                            </div>
+                            <div class="form-group"><label for="users">Utilisateurs</label><input type="number" id="users" name="users" min="1" placeholder="Ex: 10" inputmode="numeric"></div>
                         </div>
-
                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="startDate">Date de démarrage souhaitée</label>
-                                <input type="date" id="startDate">
-                            </div>
-                            <div class="form-group">
-                                <label for="budget">Budget mensuel estimé (FCFA)</label>
-                                <input type="text" id="budget" placeholder="Ex: 35000">
-                            </div>
+                            <div class="form-group"><label for="startDate">Démarrage</label><input type="date" id="startDate" name="startDate"></div>
+                            <div class="form-group"><label for="budget">Budget (FCFA)</label><input type="text" id="budget" name="budget" placeholder="Ex: 35000" inputmode="numeric"></div>
                         </div>
-
                         <div class="form-group full-width">
-                            <label for="currentSystem">Système actuel de gestion documentaire</label>
-                            <input type="text" id="currentSystem" placeholder="Ex: Classeurs physiques, Excel, Google Drive, autre logiciel...">
-                            <span class="hint">Comment gérez-vous vos documents actuellement ?</span>
+                            <label for="requirements">Exigences <span class="required">*</span></label>
+                            <textarea id="requirements" name="requirements" rows="4" required placeholder="Décrivez vos besoins..."></textarea>
                         </div>
-
                         <div class="form-group full-width">
-                            <label for="requirements">Exigences spécifiques & Besoins particuliers <span class="required">*</span></label>
-                            <textarea id="requirements" rows="5" required placeholder="Décrivez vos besoins en détail :
-• Types de documents à archiver (factures, contrats, dossiers RH, etc.)
-• Volume estimé de documents
-• Besoins spécifiques (recherche OCR, signature électronique, workflow de validation, etc.)
-• Contraintes techniques (hébergement local, conformité RGPD, etc.)
-• Formation des utilisateurs nécessaire
-• Délais impératifs
-• Autres précisions..."></textarea>
-                        </div>
-
-                        <div class="form-group full-width">
-                            <label for="comments">Commentaires additionnels</label>
-                            <textarea id="comments" rows="3" placeholder="Toute information complémentaire utile..."></textarea>
+                            <label for="comments">Commentaires</label>
+                            <textarea id="comments" name="comments" rows="2" placeholder="Infos complémentaires..."></textarea>
                         </div>
                     </div>
                 </div>
 
-                <!-- Checkbox confirmation -->
+                <!-- Confirmation -->
                 <div class="form-checkbox">
                     <input type="checkbox" id="confirm" required>
-                    <label for="confirm">Je certifie l'exactitude des informations fournies et souhaite recevoir un devis personnalisé sous 24h <span class="required">*</span></label>
+                    <label for="confirm">Je certifie les informations et accepte d'être contacté <span class="required">*</span></label>
                 </div>
 
-                <!-- Boutons -->
+                <!-- Options téléchargement -->
+                <div class="download-options">
+                    <button type="button" class="btn btn-secondary btn-sm" id="btnJson">💾 JSON</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="btnPdf">📄 PDF</button>
+                </div>
+
+                <!-- Actions -->
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary btn-lg">
-                        <span>✅</span> Envoyer le bon de commande
-                    </button>
-                    <button type="button" class="btn btn-outline btn-lg" onclick="resetForm()">
-                        <span>🔄</span> Réinitialiser
-                    </button>
-                    <button type="button" class="btn btn-whatsapp btn-lg" onclick="saveDraft()">
-                        <span>💾</span> Sauvegarder en brouillon
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">✅ Envoyer la commande</button>
+                    <button type="button" class="btn btn-outline" onclick="resetForm()">🔄 Réinitialiser</button>
                 </div>
             </form>
 
-            <!-- Info box -->
+            <!-- Info Processus -->
             <div class="info-box">
-                <h4>📋 Que se passe-t-il après l'envoi ?</h4>
+                <h4>📋 Après l'envoi</h4>
                 <ol>
-                    <li><strong>Réception immédiate</strong> - Votre demande arrive sur notre WhatsApp professionnel</li>
-                    <li><strong>Analyse sous 24h</strong> - Notre équipe étudie vos besoins spécifiques</li>
-                    <li><strong>Démonstration gratuite</strong> - Nous programmons une visio de 30 min pour vous présenter la solution</li>
-                    <li><strong>Devis personnalisé</strong> - Vous recevez une offre adaptée à vos exigences</li>
-                    <li><strong>Déploiement</strong> - Mise en place et formation de vos équipes</li>
+                    <li><strong>Réception immédiate</strong> sur WhatsApp</li>
+                    <li><strong>Analyse sous 24h</strong> de vos besoins</li>
+                    <li><strong>Démo gratuite</strong> programmée</li>
+                    <li><strong>Devis personnalisé</strong> envoyé</li>
+                    <li><strong>Déploiement</strong> et formation</li>
                 </ol>
             </div>
         </div>
@@ -237,11 +176,11 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <h3>📁 ArchivePME</h3>
-                    <p>La solution d'archivage numérique pour les PME africaines</p>
+                    <p>Archivage numérique pour PME africaines</p>
                 </div>
                 <div class="footer-contact">
-                    <p>📧 rhemacorporation.office@gmail.com</p>
-                    <p>💬 +228 90 58 83 58</p>
+                    <p>📧 <a href="mailto:rhemacorporation.office@gmail.com">rhemacorporation.office@gmail.com</a></p>
+                    <p>💬 <a href="https://wa.me/22890588358">+228 90 58 83 58</a></p>
                     <p>📍 Lomé, Togo</p>
                 </div>
             </div>
@@ -251,6 +190,10 @@
         </div>
     </footer>
 
+    <!-- Bouton installation PWA -->
+    <button id="installBtn" class="install-pwa" style="display:none;">📱 Installer l'app</button>
+
+    <!-- Script principal -->
     <script src="js/app.js"></script>
 </body>
 </html>
