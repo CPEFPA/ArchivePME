@@ -5,7 +5,7 @@ body{font-family:system-ui,sans-serif;color:var(--d)}
 .navbar{position:fixed;top:0;width:100%;background:#fff;padding:1rem 0;box-shadow:0 2px 5px rgba(0,0,0,.1)}
 .navbar .container{display:flex;justify-content:space-between;align-items:center}
 .btn-nav{background:var(--p);color:#fff;padding:.5rem 1rem;border-radius:20px;text-decoration:none}
-.hero{margin-top:70px;padding:100px 0;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;text-align:center}
+.hero{margin-top:70px;padding:100px 0;background:linear-gradient(135deg,#667eea,#764ba2),url('../images/bg-hero.jpg');background-size:cover;background-position:center;color:#fff;text-align:center}
 .hero h1{font-size:2.5rem;margin-bottom:1rem}
 .btn-whatsapp{display:inline-block;padding:1rem 2rem;background:#25d366;color:#fff;text-decoration:none;border-radius:50px;font-weight:bold}
 .footer{background:var(--d);color:#fff;padding:2rem 0;text-align:center}
