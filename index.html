@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArchivePME - Solution d'Archivage Professionnelle</title>
+    <!-- Dans <head>, après le titre -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+<!-- Dans le formulaire, juste avant <div class="form-actions"> -->
+<div class="download-options">
+    <button type="button" class="btn btn-secondary btn-sm" onclick="generateJSON()" id="btnJson">💾 Télécharger JSON</button>
+    <button type="button" class="btn btn-secondary btn-sm" onclick="generatePDF()" id="btnPdf">📄 Générer PDF</button>
+</div>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -231,13 +240,13 @@
                     <p>La solution d'archivage numérique pour les PME africaines</p>
                 </div>
                 <div class="footer-contact">
-                    <p>📧 contact@archivepme.com</p>
+                    <p>📧 rhemacorporation.office@gmail.com</p>
                     <p>💬 +228 90 58 83 58</p>
                     <p>📍 Lomé, Togo</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 ArchivePME | Développé par <strong>CPEFPA</strong></p>
+                <p>&copy; 2026 ArchivePME | Développé par <strong>RHEMA CORPORATION OFFICE</strong></p>
             </div>
         </div>
     </footer>

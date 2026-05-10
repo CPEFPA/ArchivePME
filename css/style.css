@@ -449,3 +449,25 @@ body {
 .form-card:nth-child(1) { animation-delay: 0.1s; }
 .form-card:nth-child(2) { animation-delay: 0.2s; }
 .form-card:nth-child(3) { animation-delay: 0.3s; }
+/* Options de téléchargement */
+.download-options {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1.5rem 0;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px dashed var(--border);
+}
+.btn-secondary {
+    background: #f1f5f9;
+    color: var(--dark);
+    border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: #e2e8f0; }
+.btn-sm { padding: 0.5rem 1rem; font-size: 0.9rem; }
+.btn.loading { opacity: 0.6; pointer-events: none; position: relative; }
+.btn.loading::after {
+    content: "⏳";
+    position: absolute;
+    right: -20px;
+}
